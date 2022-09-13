@@ -22,13 +22,14 @@ void setup() {
   Serial.println("SimPower");
   SIM900power();
 
-
-
   Serial.begin(9600);         // включаем hardware-порт
   mySerial.begin(9600);  // включаем software-порт
   
   Serial.println("Star OK");
   // put your setup code here, to run once:
+  Serial.println("AT");
+  Serial.println("AT+CMGF=1");
+  Serial.println("AT+CNMI=1,2,0,0,0");
 
 }
 
@@ -41,5 +42,21 @@ void loop() {
     if (Serial.available()) {
         char c = Serial.read();      // читаем из hardware-порта
         mySerial.write(c);
+//         if(c.indexOf("test") != -1){
+//          Serial.println("Password OK");
+//        }
+//          char *str;
+
+//  char sz[] = Serial.read();
+//  char *p = sz;
+//  while ((str = strtok_r(p, "\r", &p)) != NULL) 
+//    {
+//     if (str == "test"){
+//      Serial.println("Password OK");
+//     }
+//     else{
+//      Serial.println("Хуй там плавал");
+//     }
+//    }
     }
 }
