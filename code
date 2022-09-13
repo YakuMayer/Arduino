@@ -1,0 +1,45 @@
+#include <SoftwareSerial.h>
+
+// Создать объект программного последовательного порта для связи с SIM900
+// Tx и Rx SIM900 подключены к выводам 7 и 8 Arduino
+SoftwareSerial mySerial(7, 8);
+
+void SIM900power()
+{
+  pinMode(9, OUTPUT);
+  digitalWrite(9,LOW);
+  delay(1000);
+  digitalWrite(9,HIGH);
+  delay(2000);
+  digitalWrite(9,LOW);
+  delay(3000);
+}
+
+void setup() {
+//  pinMode(7,INPUT);
+//  pinMode(8,OUTPUT);
+  
+  Serial.println("SimPower");
+  SIM900power();
+
+
+
+  Serial.begin(9600);         // включаем hardware-порт
+  mySerial.begin(9600);  // включаем software-порт
+  
+  Serial.println("Star OK");
+  // put your setup code here, to run once:
+
+}
+
+
+void loop() {
+    if (mySerial.available()) {
+        char c = mySerial.read();  // читаем из software-порта
+        Serial.print(c);                   // пишем в hardware-порт
+    }
+    if (Serial.available()) {
+        char c = Serial.read();      // читаем из hardware-порта
+        mySerial.write(c);
+    }
+}
